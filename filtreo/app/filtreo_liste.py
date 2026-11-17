@@ -2336,10 +2336,15 @@ def registro(n=300, ip="", cerca="", solo=""):
         bloccata = c[r].startswith("BLOCKED")
         if solo == "bloccate" and not bloccata or solo == "passate" and bloccata:
             continue
-        chi = nomi.get(c[1]) or nomi_ts.get(c[1]) or ("Home Assistant" if IGNORA_IP.match(c[1] or "0.0.0.0") else c[1])
+        # 0.10.4: dalla macchina stessa (127.x, ::1) arrivano solo le verifiche di Filtreo (aggiornamento, controlli):
+        # si segnano «interno» e le app non le mostrano. 172.30.x è Home Assistant (app dentro Home Assistant OS).
+        locale = bool(re.match(r"^(127\.|::1$|0\.0\.0\.0$)", c[1] or "0.0.0.0"))
+        chi = nomi.get(c[1]) or nomi_ts.get(c[1]) or ("Verifica di Filtreo" if locale else
+                                                     "Home Assistant" if IGNORA_IP.match(c[1] or "0.0.0.0") else c[1])
         out.append({"ora": c[0][11:19], "ip": c[1], "dispositivo": chi,
                     "dominio": dom, "bloccata": bloccata, "motivo": c[r][:60],
-                    "pubblicita": _pubblicita(dom) or dom in SENTINELLE})
+                    "pubblicita": _pubblicita(dom) or dom in SENTINELLE,
+                    "interno": locale and not (nomi.get(c[1]) or nomi_ts.get(c[1]))})
         if len(out) >= n:
             break
     return out

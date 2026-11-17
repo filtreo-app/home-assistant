@@ -243,7 +243,7 @@ def invia(token, payload, ambiente="production", tipo="liveactivity", imp=None, 
         return False, "chiave APNs mancante"
     if not token or any(c not in "0123456789abcdefABCDEF" for c in token):
         return False, "token non valido"
-    argomento = imp["topic"] + (".push-type.liveactivity" if tipo == "liveactivity" else "")
+    argomento = imp["topic"] + {"liveactivity": ".push-type.liveactivity", "widgets": ".push-type.widgets"}.get(tipo, "")
     try:
         stato, corpo = richiesta_h2(HOST.get(ambiente, HOST["production"]), "/3/device/" + token.lower(),
                                     [("authorization", "bearer " + token_jwt(imp)), ("apns-topic", argomento),

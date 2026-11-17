@@ -769,6 +769,24 @@ def controlla_attivita(invia=None, adesso=None):
     return fatti
 
 
+# ───────────── 0.10.5: il widget dell'iPhone aggiornato con un avviso (widget_push.py) ─────────────
+WIDGET_PUSH_FILE = os.path.join(filtro.DATA, "widget-push.json")
+
+
+def giro_widget(ogni=30):
+    import widget_push
+    time.sleep(20)
+    while True:
+        try:
+            if os.path.exists(WIDGET_PUSH_FILE) and apns.impostazioni():
+                for tok, motivo, ok, err in widget_push.giro(WIDGET_PUSH_FILE, stato, pausa_stato,
+                                                            lambda t, c, amb, tipo, pr: apns.invia(t, c, amb, tipo, priorita=pr)):
+                    print("Filtreo: avviso al widget (%s) %s%s" % (motivo, "inviato" if ok else "non inviato", "" if ok else " (%s)" % err), flush=True)
+        except Exception as e:   # mai fermarsi
+            print("Filtreo: avvisi al widget non riusciti (%s)" % type(e).__name__, flush=True)
+        time.sleep(ogni)
+
+
 def giro_attivita(ogni=5):
     time.sleep(8)
     while True:
@@ -1626,6 +1644,10 @@ class H(BaseHTTPRequestHandler):
             if p == "/pannello/abbina/revoca":
                 ok, t = abb.revoca((self._corpo_json().get("id")) or q.get("id", [""])[0])
                 return self._json(200 if ok else 404, {"ok": ok, "testo": t, "app": abb.elenco()})
+            if p == "/pannello/widget/registra":   # 0.10.5: token WidgetKit dell'iPhone (avvisi al widget, iOS 26)
+                import widget_push
+                code, obj = widget_push.registra(WIDGET_PUSH_FILE, self._corpo_json())
+                return self._json(code, obj)
             if p == "/pannello/pausa/attivita":   # 0.9.4: token dell'Attività in tempo reale della pausa
                 code, obj = attivita_registra(self._corpo_json())
                 return self._json(code, obj)
@@ -1995,11 +2017,8 @@ def casa_id():
 
 
 def casa_nome():
-    try:
-        x = next((d for d in liste.dispositivi() if d.get("principale")), None)
-        return (os.environ.get("FILTREO_MDNS_NOME") or (x or {}).get("nome") or "Casa").strip()[:40] or "Casa"
-    except Exception:
-        return "Casa"
+    """0.10.4: il nome con cui Casa si presenta (Bonjour, Home Assistant): «Casa», non il nome di un dispositivo."""
+    return (os.environ.get("FILTREO_MDNS_NOME") or "Casa").strip()[:40] or "Casa"
 
 
 ANNUNCIO = {"a": None}
@@ -2145,6 +2164,7 @@ if __name__ == "__main__":
     filtro.avvia_timer()   # riattivazione programmata della pausa di 30 secondi (solo se Blocky non accetta «30s»)
     stat.avvia()   # 3.1: statistiche lette in sottofondo (risposte sempre veloci)
     threading.Thread(target=giro_regole_a_tempo, daemon=True).start()   # 0.9.1: «Consenti per 1 ora» scade da solo
+    threading.Thread(target=giro_widget, daemon=True).start()            # 0.10.5: widget aggiornato con avvisi, non con richieste
     threading.Thread(target=giro_attivita, daemon=True).start()          # 0.9.4: Attività della pausa chiusa anche ad app chiusa
     ha.avvia(sys.modules[__name__])   # porta con chiave per l'integrazione di Home Assistant (mai un errore)
     if CHIAVE_BARRA:

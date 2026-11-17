@@ -1,5 +1,5 @@
 name: Filtreo
-version: "0.10.3"
+version: "0.10.5"
 slug: filtreo
 description: Il filtro di casa anti pubblicità e tracker, per tutta la rete (motore Blocky).
 url: "https://github.com/filtreo-app/home-assistant"

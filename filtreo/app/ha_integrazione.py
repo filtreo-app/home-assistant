@@ -103,7 +103,18 @@ def raccogli():
         e = _pan.liste.elenco()
     except Exception:
         e = {"dispositivi": [], "modalita": []}
-    modalita = [{"id": m["id"], "nome": m.get("nome") or m["id"]} for m in (e.get("modalita") or []) if m]
+    def _nome_profilo(m):   # 0.10.4: lo stesso nome che mostrano le app («Personale», «Standard · personalizzato»)
+        try:
+            return _pan.livelli.etichetta(m) or m.get("nome") or m["id"]
+        except Exception:
+            return m.get("nome") or m["id"]
+
+    def _sotto_profilo(m):
+        try:
+            return _pan.livelli.sotto(m)
+        except Exception:
+            return ""
+    modalita = [{"id": m["id"], "nome": _nome_profilo(m), "sotto": _sotto_profilo(m)} for m in (e.get("modalita") or []) if m]
     if e.get("pausa"):
         modalita.append({"id": e["pausa"]["id"], "nome": e["pausa"].get("nome") or e["pausa"]["id"]})
     visti, ids = set(), []

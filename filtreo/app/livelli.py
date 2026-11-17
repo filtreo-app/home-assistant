@@ -17,7 +17,7 @@ Come si memorizza (modalita.json, dentro la modalità che i dispositivi usano gi
   riallinea() e ricalcola_diff(). Così tutto il resto del motore (liste per gruppo, paracadute, app vecchie) non cambia.
 Una modalità senza «livello» (TV e casse, Isolato, profili creati a mano) resta com'era: niente «modificato».
 
-Stato «modificato»: almeno una differenza → etichetta «Standard · modificato»; «Torna a Standard» le toglie tutte.
+Stato «modificato»: almeno una differenza → etichetta «Standard · personalizzato»; «Torna a Standard» le toglie tutte.
 
 «Personale» (scelta motivata): NON si cancella e non cambia id. Diventa «Standard modificato» (livello = standard, differenze
 calcolate dalle sue liste e dai suoi strumenti di lavoro): cosa blocca resta identico, i dispositivi restano lì, e le app
@@ -158,11 +158,27 @@ def differenze(m, ff=None):
 
 
 def etichetta(m, ff=None):
-    """«Standard», «Standard · modificato», oppure il nome della modalità se non parte da un livello."""
+    """0.10.4 — il nome con cui OGNI superficie (app, Home Assistant, pannello) mostra il profilo:
+    un profilo con un nome suo («Personale», «Ufficio») si legge con quel nome; un preimpostato si legge
+    «Standard», oppure «Standard · personalizzato» se è stato cambiato (come fanno AdGuard e simili)."""
+    liv = m.get("livello")
+    nome = (m.get("nome") or "").strip()
+    if liv not in _LIV:
+        return nome
+    if nome and nome.lower() != _LIV[liv][1].lower():
+        return nome
+    return _LIV[liv][1] + (" · personalizzato" if differenze(m, ff).get("n") else "")
+
+
+def sotto(m, ff=None):
+    """0.10.4 — la riga sotto il nome: «Di serie», «Parte da Standard» o vuota (profili speciali)."""
     liv = m.get("livello")
     if liv not in _LIV:
-        return m.get("nome", "")
-    return _LIV[liv][1] + (" · modificato" if differenze(m, ff).get("n") else "")
+        return ""
+    nome = (m.get("nome") or "").strip()
+    if (nome and nome.lower() != _LIV[liv][1].lower()) or differenze(m, ff).get("n"):
+        return "Parte da " + _LIV[liv][1]
+    return "Di serie"
 
 
 def scheda(m, ff=None):
@@ -171,7 +187,9 @@ def scheda(m, ff=None):
     liv = m.get("livello") if m.get("livello") in _LIV else None
     d = differenze(m, ff) if liv else {}
     return {"livello": liv, "livello_nome": _LIV[liv][1] if liv else "", "modificato": bool(d.get("n")),
-            "n_differenze": int(d.get("n") or 0), "etichetta": etichetta(m, ff),
+            "n_differenze": int(d.get("n") or 0),
+            "etichetta": (_LIV[liv][1] + (" · personalizzato" if d.get("n") else "")) if liv else (m.get("nome") or ""),
+            "mostra": etichetta(m, ff), "sotto": sotto(m, ff),
             "alias": m.get("nome", "") if liv and m.get("nome", "").lower() != _LIV[liv][1].lower() else ""}
 
 
