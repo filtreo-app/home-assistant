@@ -125,8 +125,9 @@ def _etichetta(t, n=40):
 
 
 class Annuncio:
-    def __init__(self, porta, versione="", nome="", id_casa=""):
+    def __init__(self, porta, versione="", nome="", id_casa="", extra=None):
         self.porta = int(porta)
+        self.extra = {str(k): v for k, v in (extra or {}).items() if v not in (None, "")}   # 0.10.3: «ha» (porta) e «nodo»
         self.nome = (nome or os.environ.get("FILTREO_MDNS_NOME", "") or "Casa").strip()[:40]
         self.versione = (versione or "").lstrip("v")
         self.id_casa = id_casa
@@ -142,7 +143,8 @@ class Annuncio:
 
     # ── contenuto ──
     def voci_txt(self):
-        return {"v": self.versione, "nome": self.nome, "id": self.id_casa, "porta": self.porta, "abbina": 1, "percorso": "/pannello"}
+        return dict({"v": self.versione, "nome": self.nome, "id": self.id_casa, "porta": self.porta, "abbina": 1, "percorso": "/pannello"},
+                    **self.extra)
 
     def risposta(self, ttl=TTL, solo=None, ident=0, eco=b""):
         """pacchetto di risposta: PTR + SRV + TXT + A (o solo quelli in «solo»)."""

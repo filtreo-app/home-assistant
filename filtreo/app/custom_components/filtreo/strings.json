@@ -20,6 +20,10 @@
         "data": {
           "token": "Chiave"
         }
+      },
+      "trovato": {
+        "title": "Filtreo found on your network",
+        "description": "Filtreo was found at {host}. Press Submit: a request to allow will appear in Filtreo."
       }
     },
     "error": {
@@ -29,8 +33,15 @@
     },
     "abort": {
       "already_configured": "Questo Filtreo è già collegato.",
-      "reauth_successful": "Chiave aggiornata."
-    }
+      "reauth_successful": "Chiave aggiornata.",
+      "cannot_connect": "Filtreo is not responding. Make sure the FiltreoCasa app is running.",
+      "rifiutato": "The connection was refused in Filtreo.",
+      "scaduto": "No answer within 10 minutes. Try again from Settings › Devices & services."
+    },
+    "progress": {
+      "consenso": "Open the Filtreo panel (in the Home Assistant sidebar or in a browser) and press **Allow** on the \"wants to connect to Filtreo\" box. You have 10 minutes."
+    },
+    "flow_title": "{name}"
   },
   "services": {
     "pausa": {

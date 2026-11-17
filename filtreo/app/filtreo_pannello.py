@@ -1453,7 +1453,7 @@ class H(BaseHTTPRequestHandler):
         if u == "/pannello/aggiornamento":   # Casa automatica: versione, interruttore, ultima verifica, ultimo esito, registro
             return self._json(200, agg.stato_pannello())
         if u == "/pannello/abbina/attese":   # codici delle richieste in attesa (pannello e app già collegate)
-            return self._json(200, {"attese": abb.attese()})
+            return self._json(200, {"attese": abb.attese(), "ha": ha.richieste_ha()})
         if u == "/pannello/abbina/elenco":   # Impostazioni › App collegate
             return self._json(200, {"app": abb.elenco()})
         if u == "/pannello/casa":   # chi è questa Casa (lo legge l'app dopo averla trovata con Bonjour)
@@ -1617,6 +1617,9 @@ class H(BaseHTTPRequestHandler):
                 t = abb.invito()
                 return self._json(200, {"ok": True, "scade_tra": abb.INVITO_VALIDITA,
                                         "link": "filtreo://collega?ponte=%s&invito=%s" % (quote(pi["indirizzo"], safe=""), t)})
+            if p in ("/pannello/ha/consenti", "/pannello/ha/rifiuta"):   # 0.10.3: Home Assistant chiede di collegarsi
+                ok, testo = ha.decidi_ha((self._corpo_json().get("id")) or q.get("id", [""])[0], p.endswith("consenti"))
+                return self._json(200 if ok else 404, {"ok": ok, "testo": testo})
             if p == "/pannello/abbina/rifiuta":
                 ok = abb.rifiuta((self._corpo_json().get("id")) or q.get("id", [""])[0])
                 return self._json(200 if ok else 404, {"ok": ok, "testo": "Richiesta rifiutata" if ok else "Richiesta scaduta"})
@@ -2046,6 +2049,94 @@ stat.collega(conti_cf=conti_cloudflare, ore_cf=ore_cloudflare, risolvi_cf=risolv
              fissi=lambda: (dict({d: "pubblicita" for d in liste.SENTINELLE}, **{d: "telemetria" for d in liste.MAI_PERMESSI}),
                             {r.lstrip("*.").lower() for r in liste._righe_pulite("blocca.txt")}))
 
+
+# ───────────── 0.10.3: avviso «Collega Filtreo» in Home Assistant + Filtreo rilevato tra i dispositivi ─────────────
+AVVISO_COLLEGA = {"scade": 0.0, "attivo": False, "link": "", "da_conf": None, "n": None, "fino": 0.0}
+AVVISO_VALIDITA = 7 * 86400
+
+
+def _supervisor(metodo, percorso, dati=None):
+    """chiamata al Supervisor di Home Assistant. Mai un errore: ritorna True se è andata."""
+    tok = os.environ.get("SUPERVISOR_TOKEN", "")
+    if not tok:
+        return False
+    try:
+        import urllib.request
+        r = urllib.request.Request("http://supervisor" + percorso, method=metodo, data=json.dumps(dati or {}).encode(),
+                                   headers={"Authorization": "Bearer " + tok, "Content-Type": "application/json"})
+        urllib.request.urlopen(r, timeout=8).read()
+        return True
+    except Exception:
+        return False
+
+
+def link_collega(indirizzo, invito):
+    """la pagina di Filtreo Cloud che apre l'app con l'invito (dopo il #: non arriva mai a nessun server)."""
+    from urllib.parse import quote
+    base = indirizzo.split("/casa/")[0].rstrip("/")
+    return "%s/collega#ponte=%s&invito=%s" % (base, quote(indirizzo, safe=""), invito)
+
+
+def testo_avviso_collega(link, integrazione_da_configurare, collegati=0):
+    if collegati:
+        t = ("Filtreo è collegato a %d %s.\n\n"
+             "**Per collegare un altro dispositivo** (per esempio il Mac), apri questo avviso su quel dispositivo e tocca "
+             "[Collega Filtreo](%s). Il collegamento è nuovo, si usa una sola volta e funziona anche fuori casa.\n\n"
+             "Questo avviso si chiude da solo tra 24 ore." % (collegati, "dispositivo" if collegati == 1 else "dispositivi", link))
+    else:
+        t = ("FiltreoCasa è attivo.\n\n"
+             "**Collega l'app Filtreo:** apri questo avviso sull'iPhone o sul Mac dove hai installato Filtreo e tocca "
+             "[Collega Filtreo](%s). Funziona anche fuori casa.\n\n"
+             "Il collegamento vale 7 giorni e si usa una sola volta." % link)
+    if integrazione_da_configurare:
+        t += ("\n\n**Filtreo tra i dispositivi di Home Assistant:** riavvia Home Assistant una volta "
+              "(Impostazioni › menu ⋮ › Riavvia Home Assistant). Poi in Impostazioni › Dispositivi e servizi "
+              "Filtreo compare tra i dispositivi rilevati: premi Configura, poi Invia.")
+    return t
+
+
+def giro_avviso_collega():
+    """ogni 30 s, solo dentro Home Assistant OS. Finché nessuna app è collegata tiene in Home Assistant l'avviso
+    «Collega Filtreo» con un invito valido. Dopo il primo collegamento lo rinnova con un invito nuovo (per il Mac o un
+    altro dispositivo) e lo chiude da solo dopo 24 ore."""
+    if not os.environ.get("SUPERVISOR_TOKEN"):
+        return
+    _supervisor("POST", "/discovery", {"service": "filtreo", "config": {"porta": ha.PORTA}})   # Dispositivi e servizi › Rilevato
+    A = AVVISO_COLLEGA
+    while True:
+        try:
+            pi = casa_info().get("ponte") or {}
+            n = len(abb.elenco())
+            hs = ha.stato_pannello()
+            da_conf = bool(hs.get("in_ha")) and not hs.get("collegata")
+            adesso = time.time()
+            ponte_ok = bool(pi.get("collegata") and pi.get("indirizzo"))
+            if n == 0 and ponte_ok:
+                nuovo = adesso > A["scade"] - 3600 or not A.get("link")
+                if nuovo or A["da_conf"] != da_conf or A.get("n") != 0:
+                    if nuovo:
+                        A["link"] = link_collega(pi["indirizzo"], abb.invito(validita=AVVISO_VALIDITA))
+                        A["scade"] = adesso + AVVISO_VALIDITA
+                    if _ha_chiama("create", {"notification_id": "filtreo_collega", "title": "Filtreo · Collega l'app",
+                                             "message": testo_avviso_collega(A["link"], da_conf)}):
+                        A.update(attivo=True, da_conf=da_conf, n=0, fino=0.0)
+            elif n > 0 and A["attivo"]:
+                if not A.get("fino"):
+                    A["fino"] = adesso + 86400
+                if adesso > A["fino"]:
+                    if _ha_chiama("dismiss", {"notification_id": "filtreo_collega"}):
+                        A.update(attivo=False, scade=0.0, link="", fino=0.0, n=None)
+                elif (A.get("n") != n or A["da_conf"] != da_conf) and ponte_ok:
+                    if A.get("n") != n:
+                        A["link"] = link_collega(pi["indirizzo"], abb.invito(validita=86400))
+                    if _ha_chiama("create", {"notification_id": "filtreo_collega", "title": "Filtreo · Collega l'app",
+                                             "message": testo_avviso_collega(A["link"], da_conf, n)}):
+                        A.update(n=n, da_conf=da_conf)
+        except Exception as e:
+            sys.stderr.write("Filtreo: avviso di collegamento (%s)\n" % type(e).__name__)
+        time.sleep(30)
+
+
 if __name__ == "__main__":
     agg.avvia()   # prova di aggiornamento interrotta (Casa ripartita a metà)? torna alla versione di prima prima di tutto
     liste.giri_extra.append(rn.giro)
@@ -2068,7 +2159,8 @@ if __name__ == "__main__":
     srv = ThreadingHTTPServer(("0.0.0.0", PORTA), H)
     if os.environ.get("FILTREO_IN_PROVA") != "1":   # durante la prova di un aggiornamento l'annuncio lo fa il pannello definitivo
         try:
-            ANNUNCIO["a"] = mdns.Annuncio(PORTA, VERSIONE, casa_nome(), casa_id())
+            ANNUNCIO["a"] = mdns.Annuncio(PORTA, VERSIONE, casa_nome(), casa_id(),
+                                          extra={"ha": ha.PORTA, "nodo": ha._nodo()} if ha._server["srv"] else None)
             ANNUNCIO["a"].avvia()
         except Exception as e:
             sys.stderr.write("Filtreo: annuncio in rete non avviato (%s)\n" % type(e).__name__)
@@ -2077,4 +2169,5 @@ if __name__ == "__main__":
             PONTE["p"].avvia()
         except Exception as e:
             sys.stderr.write("Filtreo: ponte non avviato (%s)\n" % type(e).__name__)
+        threading.Thread(target=giro_avviso_collega, daemon=True).start()   # 0.10.3: «Collega Filtreo» in Home Assistant
     srv.serve_forever()

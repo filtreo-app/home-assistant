@@ -156,7 +156,8 @@ INVITO_VALIDITA = 900
 _inviti = {}
 
 
-def invito(adesso=None):
+def invito(adesso=None, validita=None):
+    """invito monouso. validita: secondi (di serie 15 minuti; 0.10.3: 7 giorni per l'avviso di Home Assistant)."""
     adesso = adesso or time.time()
     t = secrets.token_urlsafe(24)
     with _lock:
@@ -164,7 +165,7 @@ def invito(adesso=None):
             _inviti.pop(h, None)
         if len(_inviti) >= MAX_ATTESA:
             _inviti.pop(min(_inviti, key=lambda h: _inviti[h]["scade"]), None)
-        _inviti[_hash(t)] = {"scade": adesso + INVITO_VALIDITA}
+        _inviti[_hash(t)] = {"scade": adesso + (validita or INVITO_VALIDITA)}
     return t
 
 

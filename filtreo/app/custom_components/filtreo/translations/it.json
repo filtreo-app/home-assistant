@@ -20,6 +20,10 @@
         "data": {
           "token": "Chiave"
         }
+      },
+      "trovato": {
+        "title": "Filtreo trovato nella rete",
+        "description": "Filtreo è stato trovato su {host}. Premi Invia: in Filtreo comparirà una richiesta da consentire."
       }
     },
     "error": {
@@ -29,8 +33,15 @@
     },
     "abort": {
       "already_configured": "Questo Filtreo è già collegato.",
-      "reauth_successful": "Chiave aggiornata."
-    }
+      "reauth_successful": "Chiave aggiornata.",
+      "cannot_connect": "Filtreo non risponde. Controlla che l’app FiltreoCasa sia avviata.",
+      "rifiutato": "Il collegamento è stato rifiutato in Filtreo.",
+      "scaduto": "Nessuna risposta in 10 minuti. Riprova da Impostazioni › Dispositivi e servizi."
+    },
+    "progress": {
+      "consenso": "Apri il pannello di Filtreo (nella barra laterale di Home Assistant o dal browser) e premi **Consenti** nel riquadro «chiede di collegarsi a Filtreo». Hai 10 minuti."
+    },
+    "flow_title": "{name}"
   },
   "services": {
     "pausa": {

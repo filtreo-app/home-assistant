@@ -168,6 +168,83 @@ def azione_modo(did, mid):
     return _pan.liste.imposta_modo(did, mid)
 
 
+
+# ───────────── 0.10.3: Home Assistant chiede il collegamento, tu lo consenti nel pannello (niente chiavi da copiare) ─────────────
+# Vale per Home Assistant su un altro apparecchio (per esempio Casa sul Jetson e Home Assistant su un altro computer):
+# Home Assistant trova Filtreo da solo (Bonjour), chiede il collegamento SOLO dalla rete di casa, e riceve la chiave
+# solo dopo «Consenti» nel pannello di Filtreo (o in un'app già collegata). Con l'app dentro Home Assistant OS non serve:
+# lì l'integrazione trova la chiave in collegamento.json.
+import ipaddress  # noqa: E402
+
+RICHIESTA_VALIDITA = 600
+_richieste_ha = {}   # id → {"nome", "ip", "scade", "stato": attesa|consentito|rifiutato}
+_lock_ha = threading.Lock()
+_RETI_PRIVATE = [ipaddress.ip_network(r) for r in ("10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "100.64.0.0/10",
+                                                  "127.0.0.0/8", "169.254.0.0/16", "fc00::/7", "fe80::/10", "::1/128")]
+
+
+def _privato(ip):
+    try:
+        a = ipaddress.ip_address(str(ip).split("%")[0])
+        if getattr(a, "ipv4_mapped", None):
+            a = a.ipv4_mapped
+        return any(a in r for r in _RETI_PRIVATE)
+    except ValueError:
+        return False
+
+
+def _pulisci_ha(adesso):
+    for k in [k for k, r in _richieste_ha.items() if r["scade"] < adesso]:
+        _richieste_ha.pop(k, None)
+
+
+def chiedi_collegamento(nome, ip, adesso=None):
+    adesso = adesso or time.time()
+    if not _privato(ip):
+        return 403, {"ok": False, "testo": "Collega Home Assistant dalla rete di casa."}
+    with _lock_ha:
+        _pulisci_ha(adesso)
+        if sum(1 for r in _richieste_ha.values() if r["stato"] == "attesa") >= 3:
+            return 429, {"ok": False, "testo": "Troppe richieste in attesa. Riprova tra qualche minuto."}
+        rid = secrets.token_urlsafe(18)
+        n = " ".join(str(nome or "Home Assistant").split())[:40] or "Home Assistant"
+        _richieste_ha[rid] = {"nome": n, "ip": str(ip)[:45], "scade": adesso + RICHIESTA_VALIDITA, "stato": "attesa"}
+    return 200, {"ok": True, "id": rid, "scade_tra": RICHIESTA_VALIDITA}
+
+
+def esito_collegamento(rid, adesso=None):
+    adesso = adesso or time.time()
+    with _lock_ha:
+        _pulisci_ha(adesso)
+        r = _richieste_ha.get(str(rid or ""))
+        if not r:
+            return 404, {"stato": "scaduta"}
+        if r["stato"] == "consentito":
+            _richieste_ha.pop(rid, None)   # la chiave si consegna una volta sola
+            return 200, {"stato": "consentito", "token": token(), "nodo": _nodo()}
+        if r["stato"] == "rifiutato":
+            _richieste_ha.pop(rid, None)
+        return 200, {"stato": r["stato"]}
+
+
+def richieste_ha(adesso=None):
+    """per il pannello e le app già collegate (già autorizzati): le richieste di Home Assistant in attesa."""
+    adesso = adesso or time.time()
+    with _lock_ha:
+        _pulisci_ha(adesso)
+        return [{"id": k, "nome": r["nome"], "ip": r["ip"], "resta": int(r["scade"] - adesso)}
+                for k, r in _richieste_ha.items() if r["stato"] == "attesa"]
+
+
+def decidi_ha(rid, consenti):
+    with _lock_ha:
+        r = _richieste_ha.get(str(rid or ""))
+        if not r or r["stato"] != "attesa":
+            return False, "Richiesta scaduta"
+        r["stato"] = "consentito" if consenti else "rifiutato"
+        r["scade"] = time.time() + 120
+    return True, ("Home Assistant collegato" if consenti else "Richiesta rifiutata")
+
 # ───────────── la porta HTTP per Home Assistant ─────────────
 class _H(BaseHTTPRequestHandler):
     server_version = "Filtreo-HA"
@@ -200,6 +277,9 @@ class _H(BaseHTTPRequestHandler):
         u = urlparse(self.path).path.rstrip("/")
         if u == "/ha/v1/salute":   # senza chiave: serve solo a capire «qui c'è Filtreo?»
             return self._json(200, {"ok": True, "filtreo": True, "versione": getattr(_pan, "VERSIONE", "") or ""})
+        if u.startswith("/ha/v1/collega/"):   # 0.10.3: Home Assistant aspetta il «Consenti» (id segreto, chiave una volta sola)
+            code, obj = esito_collegamento(u.rsplit("/", 1)[-1])
+            return self._json(code, obj)
         if not self._chiave_ok():
             return
         if u == "/ha/v1/stato":
@@ -210,6 +290,14 @@ class _H(BaseHTTPRequestHandler):
         return self._json(404, {"errore": "?"})
 
     def do_POST(self):
+        if urlparse(self.path).path.rstrip("/") == "/ha/v1/collega":   # 0.10.3: richiesta di collegamento, solo dalla rete di casa
+            try:
+                n = int(self.headers.get("Content-Length") or 0)
+                d = json.loads(self.rfile.read(min(n, 4096)) or b"{}") if n else {}
+            except Exception:
+                d = {}
+            code, obj = chiedi_collegamento(d.get("nome") if isinstance(d, dict) else "", self.client_address[0])
+            return self._json(code, obj)
         if not self._chiave_ok():
             return
         u = urlparse(self.path)
