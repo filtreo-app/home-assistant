@@ -60,7 +60,7 @@ HOST = re.compile(r"^(?:[a-z0-9_-]+\.)+[a-z][a-z0-9-]{1,}\.?$", re.I)
 
 ALTRI = "altri"
 NOMI_CATEGORIE = dict(livelli.NOMI_GRUPPI, regole="Le tue regole", app="App bloccate", altro="Altro",
-                      cloudflare="Fuori casa (Filtreo Cloud)")
+                      cloudflare="Fuori casa")
 # un dominio in più liste: vale la categoria più «specifica»
 PRIORITA = ("regole", "app", "sicurezza", "famiglia", "telemetria", "tracciamento", "fastidi", "pubblicita")
 

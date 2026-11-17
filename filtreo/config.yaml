@@ -1,5 +1,5 @@
 name: Filtreo
-version: "0.10.5"
+version: "0.10.6"
 slug: filtreo
 description: Il filtro di casa anti pubblicità e tracker, per tutta la rete (motore Blocky).
 url: "https://github.com/filtreo-app/home-assistant"
@@ -10,6 +10,8 @@ arch:
 init: false
 host_network: true          # serve anche all'annuncio Bonjour «_filtreo._tcp» (mdns.py)
 homeassistant_api: true
+hassio_api: true
+hassio_role: homeassistant   # 0.10.6: alla prima installazione riavvia Home Assistant una volta (Filtreo tra i rilevati)
 discovery:
   - filtreo                  # 0.10.3: Filtreo compare in Impostazioni › Dispositivi e servizi › Rilevato     # 3.2: notifica in Home Assistant con il codice di 6 cifre per collegare un'app
 ingress: true

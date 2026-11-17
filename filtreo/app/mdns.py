@@ -131,7 +131,10 @@ class Annuncio:
         self.nome = (nome or os.environ.get("FILTREO_MDNS_NOME", "") or "Casa").strip()[:40]
         self.versione = (versione or "").lstrip("v")
         self.id_casa = id_casa
-        self.istanza = ("Filtreo %s" % self.nome)[:60] + "." + SERVIZIO
+        # 0.10.6: nome d'istanza unico per ogni Casa (due Case nella stessa rete non si coprono a vicenda); il nome da
+        # mostrare resta nel TXT «nome»
+        coda = re.sub(r"[^0-9A-Za-z]", "", str(id_casa or ""))[:4]
+        self.istanza = (("Filtreo %s %s" % (self.nome, coda)).strip())[:60] + "." + SERVIZIO
         self.host = "filtreo-%s.local" % _etichetta(socket.gethostname())
         self.ip = ""
         self.modo = ""

@@ -441,4 +441,39 @@ def avvia(pannello):
     r = installa_integrazione()
     if r in ("installata", "aggiornata"):
         sys.stderr.write("Filtreo: integrazione %s in Home Assistant. Riavvia Home Assistant.\n" % r)
+    if r == "installata":
+        # 0.10.6: alla PRIMA installazione Home Assistant si riavvia da solo una volta (con avviso), così Filtreo compare
+        # subito tra i dispositivi rilevati senza che nessuno debba fare niente. Solo con Home Assistant OS (Supervisor).
+        threading.Thread(target=riavvia_ha_una_volta, daemon=True).start()
     return True
+
+
+def riavvia_ha_una_volta(attesa=60, chiama=None):
+    """avviso in Home Assistant, poi riavvio di Home Assistant (non del filtro). Ritorna True se il riavvio è stato chiesto."""
+    tok = os.environ.get("SUPERVISOR_TOKEN", "")
+    if not tok and chiama is None:
+        return False
+
+    def _chiama(metodo, percorso, dati=None):
+        import urllib.request
+        rq = urllib.request.Request("http://supervisor" + percorso, method=metodo, data=json.dumps(dati or {}).encode(),
+                                    headers={"Authorization": "Bearer " + tok, "Content-Type": "application/json"})
+        urllib.request.urlopen(rq, timeout=10).read()
+        return True
+
+    chiama = chiama or _chiama
+    try:
+        chiama("POST", "/core/api/services/persistent_notification/create",
+               {"notification_id": "filtreo_riavvio", "title": "Filtreo si aggiunge a Home Assistant",
+                "message": "Home Assistant si riavvia da solo tra un minuto, una volta sola, per mostrare Filtreo tra i "
+                           "dispositivi rilevati. Il filtro resta acceso."})
+    except Exception:
+        pass
+    time.sleep(attesa)
+    try:
+        chiama("POST", "/core/restart", {})
+        sys.stderr.write("Filtreo: Home Assistant riavviato per mostrare l'integrazione\n")
+        return True
+    except Exception as e:
+        sys.stderr.write("Filtreo: riavvio di Home Assistant non riuscito (%s)\n" % str(e)[:80])
+        return False
