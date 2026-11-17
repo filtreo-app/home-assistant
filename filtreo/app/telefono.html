@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#F1F4F7" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0F141A" media="(prefers-color-scheme: dark)">
+<meta name="robots" content="noindex"><meta name="referrer" content="no-referrer">
+<title>__TITOLO__</title>
+<style>
+/* Figtree (licenza OFL): lo serve il pannello stesso (figtree.woff2), nessuna richiesta esterna */
+@font-face{font-family:Figtree;font-style:normal;font-weight:300 900;font-display:swap;src:url(figtree.woff2) format("woff2")}
+:root{--bg:#0F141A;--sup:#171D25;--ris:#1F2732;--cmd:#283241;--riga:#232B36;--bor:#2C3644;--tx:#EEF2F6;--tx2:#A9B4C1;--tx3:#94A1B0;--vd:#36C678;--vdt:#5FE39A;--casa:#36C678;--cf:#A9EEC8;--tv:#173524;--tv2:#173524;--ink:#06281A;--am:#F2B54A;--amb:#2E2410;--arco:#F2B54A;--ro:#FF8279;--rob:#381C1C;--az:#7DB7FF;--vi:#B9A3FF;--disco:#14271F;--discob:#2A4A39;--discop:#2E2410;--discoo:#1F2732;--traccia:#283241;--h1:#161C24;--h2:#1B222C;--linea:#1F2732;color-scheme:dark}
+@media(prefers-color-scheme:light){:root:not([data-t=dark]){--bg:#F1F4F7;--sup:#FFFFFF;--ris:#EEF1F5;--cmd:#E3E8EE;--riga:#E6EAEF;--bor:#D5DBE3;--tx:#111820;--tx2:#4B5766;--tx3:#5F6B7A;--vd:#17794A;--vdt:#12703C;--casa:#17794A;--cf:#27955A;--tv:#E3F4EA;--tv2:#E3F4EA;--ink:#FFFFFF;--am:#9A5B00;--amb:#FFF1D1;--arco:#C27A00;--ro:#B3261E;--rob:#FDE7E5;--az:#1D63C4;--vi:#6B4FD0;--disco:#E3F4EA;--discob:#BFE3CE;--discop:#FFF1D1;--discoo:#EEF1F5;--traccia:#E3E8EE;--h1:#E9EDF2;--h2:#E4E9EF;--linea:#E6EAEF;color-scheme:light}}
+:root[data-t=light]{--bg:#F1F4F7;--sup:#FFFFFF;--ris:#EEF1F5;--cmd:#E3E8EE;--riga:#E6EAEF;--bor:#D5DBE3;--tx:#111820;--tx2:#4B5766;--tx3:#5F6B7A;--vd:#17794A;--vdt:#12703C;--casa:#17794A;--cf:#27955A;--tv:#E3F4EA;--tv2:#E3F4EA;--ink:#FFFFFF;--am:#9A5B00;--amb:#FFF1D1;--arco:#C27A00;--ro:#B3261E;--rob:#FDE7E5;--az:#1D63C4;--vi:#6B4FD0;--disco:#E3F4EA;--discob:#BFE3CE;--discop:#FFF1D1;--discoo:#EEF1F5;--traccia:#E3E8EE;--h1:#E9EDF2;--h2:#E4E9EF;--linea:#E6EAEF;color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Figtree,system-ui,-apple-system,'Segoe UI',sans-serif;font-size:15px;line-height:22px;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,p{margin:0}
+a{color:var(--vdt);text-decoration:none}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;text-align:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid var(--vdt);outline-offset:2px}
+.hdr{border-bottom:0}
+.hin{max-width:520px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:10px;height:60px;padding:env(safe-area-inset-top) 20px 0;box-sizing:content-box}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(180deg,#235541,#1E4636);color:#86C2A6;display:flex;align-items:center;justify-content:center;flex:none}
+.hin b{font-size:19px;line-height:24px;font-weight:700;letter-spacing:-.01em}
+.hin small{font-size:12.5px;line-height:16px;font-weight:600;color:var(--tx3);margin-left:-3px}
+main{max-width:520px;margin:0 auto;padding:0 20px calc(40px + env(safe-area-inset-bottom))}
+.tp{margin-top:24px}
+.tp h1{font-size:30px;line-height:36px;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
+.tp p{margin-top:4px;color:var(--tx2);text-wrap:balance}
+.passi{margin-top:20px;display:flex;flex-direction:column;gap:12px}
+.pas{background:var(--sup);border:1px solid var(--bor);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column}
+.pt{display:flex;align-items:center;gap:10px}
+.num{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--bor);background:none;color:var(--tx);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:14px;font-weight:700;flex:none}
+.pt h2{font-size:17px;line-height:22px;font-weight:700}
+.d1{margin-top:10px;font-size:14px;line-height:20px;color:var(--tx2);text-wrap:balance}
+.d2{margin-top:10px;font-size:13px;line-height:18px;color:var(--tx3);text-wrap:balance;text-align:center}
+.d2 a{font-weight:600}
+.btn{margin-top:14px;min-height:44px;border-radius:10px;border:1px solid var(--bor);padding:0 18px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;line-height:20px;font-weight:600;background:var(--sup);color:var(--tx);text-align:center;width:100%}
+.btn.pri{background:var(--vd);border-color:var(--vd);color:var(--ink);font-weight:700}
+.btn[aria-disabled=true],.btn:disabled{opacity:.55;cursor:default;pointer-events:none}
+.ok{margin-top:10px;display:flex;gap:8px;font-size:13px;line-height:18px;font-weight:600;color:var(--vdt)}
+.ok span{flex:1}
+.av,.nt{margin-top:20px;border-radius:12px;padding:14px 16px;display:flex;gap:12px;font-size:14px;line-height:20px}
+.av{background:var(--amb);color:var(--am)}.nt{background:none;color:var(--tx2);align-items:center;justify-content:center;padding:0 4px}
+.av div{flex:1;display:flex;flex-direction:column;gap:2px;text-wrap:balance}.av b{font-weight:600}
+.nt span{flex:none;text-wrap:balance}
+.altro{margin-top:20px;text-align:center}
+.altro a{min-height:44px;display:inline-flex;align-items:center;font-weight:600;color:var(--tx);text-decoration:underline;text-decoration-color:var(--linea);text-underline-offset:4px}
+#msg{min-height:0}
+@media (min-width:560px){.pas{padding:22px}}
+</style>
+<script>(function(){try{var t=localStorage.getItem("ft");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-t",t)}catch(e){}})()</script>
+</head><body>
+<header class="hdr"><div class="hin"><span class="logo"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="#86C2A6"><path d="M3.48 2.35L3.55 2.42L3.91 2.72L4.27 2.99L4.64 3.23L5.02 3.46L5.4 3.66L5.78 3.83L6.17 3.99L6.55 4.12L6.94 4.22L7.32 4.31L7.69 4.37L8.06 4.41L8.42 4.42L8.78 4.42L9.12 4.39L9.46 4.34L9.78 4.27L10.09 4.18L10.38 4.06L10.65 3.93L10.91 3.77L11.15 3.59L11.37 3.4L11.56 3.18L11.73 2.94L11.85 2.73Q12 2.4 12.15 2.73L12.27 2.94L12.44 3.18L12.63 3.4L12.85 3.59L13.09 3.77L13.35 3.93L13.62 4.06L13.91 4.18L14.22 4.27L14.54 4.34L14.88 4.39L15.22 4.42L15.58 4.42L15.94 4.41L16.31 4.37L16.68 4.31L17.06 4.22L17.45 4.12L17.83 3.99L18.22 3.83L18.6 3.66L18.98 3.46L19.36 3.23L19.73 2.99L20.09 2.72L20.45 2.42L20.52 2.35Q20.8 2.1 20.67 2.45L20.57 2.7L20.47 2.99L20.37 3.28L20.27 3.57L20.17 3.86L20.09 4.15L20 4.43L19.92 4.71L19.85 4.99L19.78 5.27L19.71 5.55L19.65 5.83L19.59 6.1L19.53 6.37L19.48 6.64L19.44 6.91L19.4 7.18L19.36 7.45L19.34 7.6Q19.32 7.74 19.21 7.81L19 7.95L18.75 8.1L18.5 8.25L18.25 8.39L18 8.53L17.75 8.66L17.5 8.79L17.25 8.91L17 9.03L16.75 9.13L16.5 9.24L16.25 9.34L16 9.43L15.75 9.52L15.5 9.6L15.25 9.67L15 9.75L14.75 9.81L14.5 9.87L14.25 9.92L14 9.97L13.75 10.01L13.5 10.05L13.25 10.08L13 10.11L12.75 10.12L12.5 10.14L12.25 10.15L12 10.15L11.75 10.15L11.5 10.14L11.25 10.12L11 10.11L10.75 10.08L10.5 10.05L10.25 10.01L10 9.97L9.75 9.92L9.5 9.87L9.25 9.81L9 9.75L8.75 9.67L8.5 9.6L8.25 9.52L8 9.43L7.75 9.34L7.5 9.24L7.25 9.13L7 9.03L6.75 8.91L6.5 8.79L6.25 8.66L6 8.53L5.75 8.39L5.5 8.25L5.25 8.1L5 7.95L4.79 7.81Q4.68 7.74 4.66 7.6L4.64 7.45L4.6 7.18L4.56 6.91L4.52 6.64L4.47 6.37L4.41 6.1L4.35 5.83L4.29 5.55L4.22 5.27L4.15 4.99L4.08 4.71L4 4.43L3.91 4.15L3.83 3.86L3.73 3.57L3.63 3.28L3.53 2.99L3.43 2.7L3.33 2.45Q3.2 2.1 3.48 2.35z"/><path d="M5.09 9.5L5.25 9.6L5.5 9.75L5.75 9.89L6 10.03L6.25 10.16L6.5 10.29L6.75 10.41L7 10.53L7.25 10.63L7.5 10.74L7.75 10.84L8 10.93L8.25 11.02L8.5 11.1L8.75 11.17L9 11.25L9.25 11.31L9.5 11.37L9.75 11.42L10 11.47L10.25 11.51L10.5 11.55L10.75 11.58L11 11.61L11.25 11.62L11.5 11.64L11.75 11.65L12 11.65L12.25 11.65L12.5 11.64L12.75 11.62L13 11.61L13.25 11.58L13.5 11.55L13.75 11.51L14 11.47L14.25 11.42L14.5 11.37L14.75 11.31L15 11.25L15.25 11.17L15.5 11.1L15.75 11.02L16 10.93L16.25 10.84L16.5 10.74L16.75 10.63L17 10.53L17.25 10.41L17.5 10.29L17.75 10.16L18 10.03L18.25 9.89L18.5 9.75L18.75 9.6L18.91 9.5Q19.21 9.31 19.2 9.66L19.2 9.8L19.19 10.37L19.15 10.94L19.09 11.49L19.01 12.03L18.91 12.56L18.78 13.08L18.64 13.58Q18.61 13.69 18.51 13.74L18.5 13.75L18.25 13.89L18 14.03L17.75 14.16L17.5 14.29L17.25 14.41L17 14.52L16.75 14.63L16.5 14.74L16.25 14.84L16 14.93L15.75 15.02L15.5 15.1L15.25 15.17L15 15.24L14.75 15.31L14.5 15.37L14.25 15.42L14 15.47L13.75 15.51L13.5 15.55L13.25 15.58L13 15.6L12.75 15.62L12.5 15.64L12.25 15.65L12 15.65L11.75 15.65L11.5 15.64L11.25 15.62L11 15.6L10.75 15.58L10.5 15.55L10.25 15.51L10 15.47L9.75 15.42L9.5 15.37L9.25 15.31L9 15.24L8.75 15.17L8.5 15.1L8.25 15.02L8 14.93L7.75 14.84L7.5 14.74L7.25 14.63L7 14.52L6.75 14.41L6.5 14.29L6.25 14.16L6 14.03L5.75 13.89L5.5 13.75L5.49 13.74Q5.39 13.69 5.36 13.58L5.22 13.08L5.09 12.56L4.99 12.03L4.91 11.49L4.85 10.94L4.81 10.37L4.8 9.8L4.8 9.66Q4.79 9.31 5.09 9.5z"/><path d="M6.52 15.8L6.75 15.91L7 16.02L7.25 16.13L7.5 16.24L7.75 16.34L8 16.43L8.25 16.52L8.5 16.6L8.75 16.67L9 16.74L9.25 16.81L9.5 16.87L9.75 16.92L10 16.97L10.25 17.01L10.5 17.05L10.75 17.08L11 17.1L11.25 17.12L11.5 17.14L11.75 17.15L12 17.15L12.25 17.15L12.5 17.14L12.75 17.12L13 17.1L13.25 17.08L13.5 17.05L13.75 17.01L14 16.97L14.25 16.92L14.5 16.87L14.75 16.81L15 16.74L15.25 16.67L15.5 16.6L15.75 16.52L16 16.43L16.25 16.34L16.5 16.24L16.75 16.13L17 16.02L17.25 15.91L17.48 15.8Q17.81 15.63 17.64 15.96L17.63 15.98L17.37 16.43L17.1 16.86L16.81 17.29L16.51 17.7L16.2 18.11L15.87 18.51L15.53 18.89L15.18 19.27L14.81 19.63L14.44 19.98L14.05 20.33L13.66 20.66L13.26 20.99L12.84 21.3L12.43 21.61L12.17 21.78Q12 21.9 11.83 21.78L11.57 21.61L11.16 21.3L10.74 20.99L10.34 20.66L9.95 20.33L9.56 19.98L9.19 19.63L8.82 19.27L8.47 18.89L8.13 18.51L7.8 18.11L7.49 17.7L7.19 17.29L6.9 16.86L6.63 16.43L6.37 15.98L6.36 15.96Q6.19 15.63 6.52 15.8z"/></svg></span><b>Filtreo</b><small>__VERSIONE__</small></div></header>
+<main>
+<!--#iphone-->
+<div class="tp"><h1>Filtreo su iPhone</h1><p>3 passaggi · 3 minuti</p></div>
+<div class="passi">
+<section class="pas"><div class="pt"><span class="num">1</span><h2>Filtro di rete</h2></div>
+<p class="d1">Filtra tutte le app, in casa e fuori casa.</p>
+__BTN_PROFILO__
+<p class="d2" id="msg" role="status" hidden></p>
+<p class="d2"><span style="display:block">Poi apri Impostazioni,</span><span style="display:block">tocca «Profilo scaricato» e «Installa».</span></p>
+</section>
+<section class="pas"><div class="pt"><span class="num">2</span><h2>Widget</h2></div>
+<p class="d1">Le richieste bloccate sulla schermata Home.</p>
+__BTN_WIDGET__
+<p class="d2">__NOTA_WIDGET__</p>
+</section>
+<section class="pas"><div class="pt"><span class="num">3</span><h2>Filtro web</h2></div>
+<p class="d1">Rimuove avvisi sui cookie e spazi vuoti in Safari.</p>
+__BTN_SAFARI__
+<p class="d2">__NOTA_SAFARI__</p>
+</section>
+</div>
+<div class="nt"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><rect x="5" y="2" width="14" height="20" rx="2.5"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg><span>Al termine, torna al Mac e premi «Continua».</span></div>
+<p class="altro"><a href="telefono?per=android">Android? Vedi le istruzioni</a></p>
+<!--/#iphone-->
+<!--#android-->
+<div class="tp"><h1>Filtreo su Android</h1><p><span style="display:block">Su Android il filtro richiede Tailscale.</span><span style="display:block">Deve restare sempre attivo.</span></p></div>
+<div class="passi">
+<section class="pas"><div class="pt"><span class="num">1</span><h2>Installa Tailscale</h2></div>
+<p class="d1">Gratuito, dal Play Store.</p>
+<a class="btn pri" href="https://play.google.com/store/apps/details?id=com.tailscale.ipn" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Apri Play Store</a>
+</section>
+<section class="pas"><div class="pt"><span class="num">2</span><h2>Accedi con l’account di Casa</h2></div>
+<p class="d1">Lo stesso usato da Casa.</p>
+<p class="ok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span><span style="display:block">In caso di dubbio, chiedi a chi</span><span style="display:block">ha installato Filtreo.</span></span></p>
+</section>
+<section class="pas"><div class="pt"><span class="num">3</span><h2>Mantieni Tailscale attivo</h2></div>
+<p class="d1"><span style="display:block">Impostazioni › VPN › Tailscale:</span><span style="display:block">attiva «VPN sempre attiva».</span></p>
+</section>
+</div>
+<div class="av"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><div><b>Con Tailscale disattivato il telefono non è protetto</b><span>Fuori casa Filtreo richiede Tailscale attivo.</span></div></div>
+<p class="altro"><a href="telefono?per=iphone">iPhone? Vedi le istruzioni</a></p>
+<!--/#android-->
+</main>
+<script>
+(function(){
+var b=document.getElementById("profilo");if(!b)return;
+var m=document.getElementById("msg");
+function dire(t,rosso){m.textContent=t;m.style.color=rosso?"var(--ro)":"";m.hidden=!t}
+b.addEventListener("click",function(){
+ if(b.disabled)return;b.disabled=true;dire("Preparazione della configurazione in corso…");
+ fetch("telefono/profilo?nome="+encodeURIComponent(b.dataset.nome||"iPhone"),{method:"POST"}).then(function(r){return r.json()}).then(function(j){
+  b.disabled=false;
+  if(!j.ok){dire(j.testo||"Impossibile completare. Riprova.",true);return}
+  dire("");b.lastChild.textContent="Scarica di nuovo la configurazione";
+  location.href="dnsp/profilo?n="+encodeURIComponent(j.n);
+ }).catch(function(){b.disabled=false;dire("Impossibile completare. Riprova.",true)});
+});
+})();
+</script>
+</body></html>

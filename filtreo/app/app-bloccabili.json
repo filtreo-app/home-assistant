@@ -1,0 +1,16 @@
+{"app": [
+ {"id": "tiktok", "nome": "TikTok", "domini": ["tiktok.com", "tiktokv.com", "tiktokcdn.com", "tiktokcdn-us.com", "byteoversea.com", "ibytedtos.com", "ibyteimg.com", "muscdn.com", "musical.ly", "tiktokw.us"]},
+ {"id": "instagram", "nome": "Instagram", "domini": ["instagram.com", "cdninstagram.com", "ig.me"]},
+ {"id": "facebook", "nome": "Facebook", "domini": ["facebook.com", "fbcdn.net", "facebook.net", "fb.com", "fb.me", "messenger.com"]},
+ {"id": "snapchat", "nome": "Snapchat", "domini": ["snapchat.com", "snap.com", "sc-cdn.net", "snapkit.com", "feelinsonice-hrd.appspot.com"]},
+ {"id": "youtube", "nome": "YouTube", "domini": ["youtube.com", "youtu.be", "googlevideo.com", "ytimg.com", "youtube-nocookie.com", "youtubei.googleapis.com"]},
+ {"id": "twitch", "nome": "Twitch", "domini": ["twitch.tv", "ttvnw.net", "jtvnw.net", "twitchcdn.net"]},
+ {"id": "netflix", "nome": "Netflix", "domini": ["netflix.com", "nflxvideo.net", "nflximg.net", "nflxext.com", "nflxso.net"]},
+ {"id": "fortnite", "nome": "Fortnite", "domini": ["fortnite.com", "epicgames.com", "epicgames.dev", "unrealengine.com", "ol.epicgames.com"]},
+ {"id": "roblox", "nome": "Roblox", "domini": ["roblox.com", "rbxcdn.com", "robloxlabs.com", "rbx.com"]},
+ {"id": "minecraft", "nome": "Minecraft", "domini": ["minecraft.net", "mojang.com", "minecraftservices.com", "playfab.com"]},
+ {"id": "discord", "nome": "Discord", "domini": ["discord.com", "discord.gg", "discordapp.com", "discordapp.net", "discord.media"]},
+ {"id": "telegram", "nome": "Telegram", "domini": ["telegram.org", "t.me", "telegram.me", "telesco.pe"]},
+ {"id": "x", "nome": "X (Twitter)", "domini": ["twitter.com", "x.com", "twimg.com", "t.co"]},
+ {"id": "reddit", "nome": "Reddit", "domini": ["reddit.com", "redd.it", "redditmedia.com", "redditstatic.com"]}
+]}

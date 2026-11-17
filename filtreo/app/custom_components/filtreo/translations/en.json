@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Filtreo",
+        "description": "Enter the address, port and key of Filtreo. They are shown in the Filtreo panel: Settings › \"Home Assistant and HomeKit\".",
+        "data": {
+          "host": "Address",
+          "port": "Port",
+          "token": "Key"
+        }
+      },
+      "conferma": {
+        "title": "Filtreo found",
+        "description": "Filtreo found at {host}. Press Submit to set it up."
+      },
+      "reauth_confirm": {
+        "title": "Filtreo key changed",
+        "description": "Paste the new key, shown in the Filtreo panel: Settings › \"Home Assistant and HomeKit\".",
+        "data": {
+          "token": "Key"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Filtreo does not answer at this address and port.",
+      "invalid_auth": "The key is wrong.",
+      "unknown": "Something went wrong."
+    },
+    "abort": {
+      "already_configured": "This Filtreo is already connected.",
+      "reauth_successful": "Key updated."
+    }
+  },
+  "services": {
+    "pausa": {
+      "name": "Pause Filtreo",
+      "description": "Pauses the filter for the given number of minutes. It resumes automatically.",
+      "fields": {
+        "minuti": {
+          "name": "Minutes",
+          "description": "Pause duration in minutes (1 to 480)."
+        }
+      }
+    }
+  }
+}

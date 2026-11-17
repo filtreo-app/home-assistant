@@ -1,0 +1,7 @@
+configuration:
+  integrazione_ha:
+    name: Home Assistant integration
+    description: Filtreo sensors and switches (protection, pause, blocked today) right inside Home Assistant.
+  chiave_barra:
+    name: Key for older apps
+    description: Only needed by setups installed before version 0.10. Leave empty.

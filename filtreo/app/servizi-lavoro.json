@@ -1,0 +1,185 @@
+{
+ "servizi": [
+  {
+   "id": "meta",
+   "nome": "Meta (Facebook, Instagram, Pixel)",
+   "domini": [
+    "facebook.com",
+    "facebook.net",
+    "fbcdn.net",
+    "fbsbx.com",
+    "fb.com",
+    "fb.me",
+    "meta.com",
+    "instagram.com",
+    "cdninstagram.com",
+    "whatsapp.com",
+    "whatsapp.net"
+   ]
+  },
+  {
+   "id": "google-ads",
+   "nome": "Google Ads e annunci Google",
+   "domini": [
+    "google.com",
+    "googleadservices.com",
+    "googlesyndication.com",
+    "doubleclick.net",
+    "googleads.g.doubleclick.net",
+    "adservice.google.com",
+    "ads.google.com"
+   ]
+  },
+  {
+   "id": "ga4",
+   "nome": "Google Analytics 4",
+   "domini": [
+    "google-analytics.com",
+    "analytics.google.com",
+    "app-measurement.com"
+   ]
+  },
+  {
+   "id": "gtm",
+   "nome": "Google Tag Manager",
+   "domini": [
+    "googletagmanager.com",
+    "tagmanager.google.com",
+    "tagassistant.google.com",
+    "googleoptimize.com"
+   ]
+  },
+  {
+   "id": "linkedin",
+   "nome": "LinkedIn (Insight Tag)",
+   "domini": [
+    "linkedin.com",
+    "licdn.com",
+    "ads.linkedin.com",
+    "px.ads.linkedin.com",
+    "snap.licdn.com"
+   ]
+  },
+  {
+   "id": "microsoft",
+   "nome": "Microsoft Ads e Clarity",
+   "domini": [
+    "bing.com",
+    "bat.bing.com",
+    "clarity.ms"
+   ]
+  },
+  {
+   "id": "tiktok",
+   "nome": "TikTok (Pixel)",
+   "domini": [
+    "tiktok.com",
+    "analytics.tiktok.com",
+    "ads-api.tiktok.com",
+    "ads.tiktok.com"
+   ]
+  },
+  {
+   "id": "hotjar",
+   "nome": "Hotjar",
+   "domini": [
+    "hotjar.com",
+    "hotjar.io",
+    "static.hotjar.com"
+   ]
+  },
+  {
+   "id": "shopify",
+   "nome": "Shopify",
+   "domini": [
+    "shopify.com",
+    "myshopify.com",
+    "shopifycdn.com",
+    "shopifysvc.com",
+    "shop.app"
+   ]
+  },
+  {
+   "id": "klaviyo",
+   "nome": "Klaviyo e newsletter",
+   "domini": [
+    "klaviyo.com",
+    "klaviyomail.com",
+    "mailchimp.com",
+    "list-manage.com",
+    "chimpstatic.com",
+    "brevo.com",
+    "sendinblue.com"
+   ]
+  },
+  {
+   "id": "pagamenti",
+   "nome": "Pagamenti (Stripe, PayPal)",
+   "domini": [
+    "stripe.com",
+    "stripe.network",
+    "paypal.com",
+    "paypalobjects.com",
+    "braintreegateway.com"
+   ]
+  },
+  {
+   "id": "errori",
+   "nome": "Errori e sessioni (Sentry, LogRocket)",
+   "domini": [
+    "sentry.io",
+    "sentry-cdn.com",
+    "logrocket.com",
+    "logrocket.io",
+    "lr-ingest.io",
+    "bugsnag.com"
+   ]
+  }
+ ],
+ "modelli": [
+  {
+   "id": "navigare",
+   "nome": "Navigazione",
+   "servizi": []
+  },
+  {
+   "id": "marketing",
+   "nome": "Marketing",
+   "servizi": [
+    "meta",
+    "google-ads",
+    "ga4",
+    "gtm",
+    "linkedin",
+    "microsoft",
+    "tiktok",
+    "hotjar"
+   ]
+  },
+  {
+   "id": "negozio",
+   "nome": "Vendita online",
+   "servizi": [
+    "meta",
+    "google-ads",
+    "ga4",
+    "gtm",
+    "shopify",
+    "klaviyo",
+    "pagamenti"
+   ]
+  },
+  {
+   "id": "sviluppo",
+   "nome": "Sviluppo web e app",
+   "servizi": [
+    "ga4",
+    "gtm",
+    "hotjar",
+    "microsoft",
+    "errori",
+    "pagamenti"
+   ]
+  }
+ ]
+}

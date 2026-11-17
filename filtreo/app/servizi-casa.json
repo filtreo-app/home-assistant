@@ -1,0 +1,296 @@
+{
+ "servizi": [
+  {
+   "id": "netflix",
+   "nome": "Netflix",
+   "domini": [
+    "netflix.com",
+    "netflix.net",
+    "nflxvideo.net",
+    "nflximg.net",
+    "nflxext.com",
+    "nflxso.net"
+   ]
+  },
+  {
+   "id": "youtube",
+   "nome": "YouTube (app TV)",
+   "domini": [
+    "www.youtube.com",
+    "m.youtube.com",
+    "tv.youtube.com",
+    "youtu.be",
+    "youtube-nocookie.com",
+    "youtubei.googleapis.com",
+    "googlevideo.com",
+    "ytimg.com",
+    "ggpht.com"
+   ]
+  },
+  {
+   "id": "prime",
+   "nome": "Prime Video",
+   "domini": [
+    "primevideo.com",
+    "amazonvideo.com",
+    "aiv-cdn.net",
+    "aiv-delivery.net",
+    "pv-cdn.net",
+    "atv-ps.amazon.com",
+    "atv-ps-eu.amazon.com",
+    "atv-ext.amazon.com",
+    "atv-ext-eu.amazon.com",
+    "media-amazon.com",
+    "ssl-images-amazon.com"
+   ]
+  },
+  {
+   "id": "disney",
+   "nome": "Disney+",
+   "domini": [
+    "disneyplus.com",
+    "disney-plus.net",
+    "bamgrid.com",
+    "dssott.com",
+    "disneystreaming.com",
+    "registerdisney.go.com"
+   ]
+  },
+  {
+   "id": "raiplay",
+   "nome": "RaiPlay",
+   "domini": [
+    "raiplay.it",
+    "www.rai.it",
+    "mediapolis.rai.it"
+   ]
+  },
+  {
+   "id": "mediaset",
+   "nome": "Mediaset Infinity",
+   "domini": [
+    "mediasetinfinity.it",
+    "mediaset.it",
+    "mediasetplay.mediaset.it"
+   ]
+  },
+  {
+   "id": "spotify",
+   "nome": "Spotify",
+   "domini": [
+    "spotify.com",
+    "scdn.co",
+    "spotifycdn.com"
+   ]
+  },
+  {
+   "id": "alexa",
+   "nome": "Alexa e casse Echo",
+   "domini": [
+    "alexa.amazon.com",
+    "api.amazonalexa.com",
+    "avs-alexa-eu.amazon.com",
+    "avs-alexa-na.amazon.com",
+    "pitangui.amazon.com",
+    "layla.amazon.com",
+    "softwareupdates.amazon.com"
+   ]
+  },
+  {
+   "id": "google-casa",
+   "nome": "Google Home e Chromecast",
+   "domini": [
+    "connectivitycheck.gstatic.com",
+    "clients3.google.com",
+    "embeddedassistant.googleapis.com",
+    "home.google.com"
+   ]
+  },
+  {
+   "id": "agg-samsung",
+   "nome": "Aggiornamenti Samsung",
+   "domini": [
+    "samsungotn.net",
+    "ospserver.net",
+    "samsungapps.com"
+   ]
+  },
+  {
+   "id": "agg-lg",
+   "nome": "Aggiornamenti e app LG",
+   "domini": [
+    "snu.lge.com",
+    "ngfts.lge.com",
+    "lgappstv.com",
+    "lgtvsdp.com",
+    "lgthinq.com"
+   ]
+  },
+  {
+   "id": "agg-apple",
+   "nome": "Aggiornamenti Apple (Apple TV, HomePod)",
+   "domini": [
+    "mesu.apple.com",
+    "gdmf.apple.com",
+    "updates.cdn-apple.com",
+    "swscan.apple.com",
+    "swcdn.apple.com",
+    "swdist.apple.com",
+    "swdownload.apple.com",
+    "appldnld.apple.com",
+    "play.itunes.apple.com",
+    "init.itunes.apple.com",
+    "buy.itunes.apple.com"
+   ]
+  },
+  {
+   "id": "agg-roku",
+   "nome": "Roku",
+   "domini": [
+    "api.roku.com",
+    "image.roku.com"
+   ]
+  },
+  {
+   "id": "agg-xiaomi",
+   "nome": "Xiaomi (Home e aggiornamenti)",
+   "domini": [
+    "io.mi.com",
+    "account.xiaomi.com",
+    "update.miui.com",
+    "bigota.d.miui.com",
+    "hugeota.d.miui.com"
+   ]
+  },
+  {
+   "id": "agg-huawei",
+   "nome": "Aggiornamenti Huawei",
+   "domini": [
+    "update.hicloud.com",
+    "query.hicloud.com"
+   ]
+  },
+  {
+   "id": "huggingface",
+   "nome": "Hugging Face",
+   "domini": [
+    "huggingface.co",
+    "hf.co"
+   ]
+  },
+  {
+   "id": "ollama",
+   "nome": "Ollama",
+   "domini": [
+    "ollama.com",
+    "ollama.ai",
+    "registry.ollama.ai",
+    "r2.cloudflarestorage.com"
+   ]
+  },
+  {
+   "id": "github",
+   "nome": "GitHub (raw, objects, ghcr)",
+   "domini": [
+    "github.com",
+    "githubusercontent.com",
+    "githubassets.com",
+    "github.io",
+    "ghcr.io"
+   ]
+  },
+  {
+   "id": "docker",
+   "nome": "Docker Hub e registri",
+   "domini": [
+    "docker.io",
+    "docker.com",
+    "quay.io",
+    "gcr.io",
+    "registry.k8s.io",
+    "public.ecr.aws"
+   ]
+  },
+  {
+   "id": "pypi",
+   "nome": "PyPI",
+   "domini": [
+    "pypi.org",
+    "pythonhosted.org",
+    "pypa.io"
+   ]
+  },
+  {
+   "id": "npm",
+   "nome": "npm e Node",
+   "domini": [
+    "npmjs.org",
+    "npmjs.com",
+    "yarnpkg.com",
+    "nodejs.org"
+   ]
+  },
+  {
+   "id": "apt",
+   "nome": "apt (Debian e Ubuntu)",
+   "domini": [
+    "debian.org",
+    "archive.ubuntu.com",
+    "security.ubuntu.com",
+    "ports.ubuntu.com",
+    "changelogs.ubuntu.com",
+    "keyserver.ubuntu.com",
+    "launchpad.net",
+    "api.snapcraft.io",
+    "snapcraft.io",
+    "storage.snapcraftcontent.com"
+   ]
+  },
+  {
+   "id": "homebrew",
+   "nome": "Homebrew",
+   "domini": [
+    "brew.sh"
+   ]
+  },
+  {
+   "id": "tailscale",
+   "nome": "Tailscale",
+   "domini": [
+    "tailscale.com",
+    "ts.net"
+   ]
+  },
+  {
+   "id": "cloudflare",
+   "nome": "Filtreo Cloud",
+   "domini": [
+    "cloudflare.com",
+    "cloudflare-dns.com",
+    "cloudflareclient.com",
+    "cloudflarestorage.com",
+    "cloudflare.net",
+    "workers.dev",
+    "trycloudflare.com",
+    "cloudflareaccess.com"
+   ]
+  },
+  {
+   "id": "nvidia",
+   "nome": "Aggiornamenti NVIDIA e JetPack",
+   "domini": [
+    "developer.nvidia.com",
+    "developer.download.nvidia.com",
+    "repo.download.nvidia.com",
+    "download.nvidia.com",
+    "docs.nvidia.com",
+    "ngc.nvidia.com",
+    "api.ngc.nvidia.com",
+    "nvcr.io",
+    "pypi.nvidia.com",
+    "jetson.webredirect.org"
+   ]
+  }
+ ],
+ "modelli": []
+}

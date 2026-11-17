@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configura Filtreo",
+        "description": "Inserisci indirizzo, porta e chiave di Filtreo. Sono indicati nel pannello: Impostazioni › «Home Assistant e HomeKit».",
+        "data": {
+          "host": "Indirizzo",
+          "port": "Porta",
+          "token": "Chiave"
+        }
+      },
+      "conferma": {
+        "title": "Filtreo rilevato",
+        "description": "Filtreo rilevato su {host}. Premi Invia per configurarlo."
+      },
+      "reauth_confirm": {
+        "title": "Chiave di Filtreo modificata",
+        "description": "Incolla la nuova chiave, indicata nel pannello: Impostazioni › «Home Assistant e HomeKit».",
+        "data": {
+          "token": "Chiave"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Filtreo non risponde a questo indirizzo e porta. Controlla che sia acceso e che l'indirizzo sia giusto.",
+      "invalid_auth": "La chiave non è giusta.",
+      "unknown": "Qualcosa è andato storto."
+    },
+    "abort": {
+      "already_configured": "Questo Filtreo è già collegato.",
+      "reauth_successful": "Chiave aggiornata."
+    }
+  },
+  "services": {
+    "pausa": {
+      "name": "Metti in pausa Filtreo",
+      "description": "Mette in pausa il filtro per i minuti indicati. La ripresa è automatica.",
+      "fields": {
+        "minuti": {
+          "name": "Minuti",
+          "description": "Durata della pausa in minuti (da 1 a 480)."
+        }
+      }
+    }
+  }
+}

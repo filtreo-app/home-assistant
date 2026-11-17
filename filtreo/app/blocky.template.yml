@@ -1,0 +1,74 @@
+# Blocky — motore di Filtreo (stessa versione per Pi e Jetson).
+# GENERATO DAL PANNELLO a partire da questo modello: le liste e i dispositivi si gestiscono dal pannello.
+
+ports:
+  dns: __DNS__
+  http: 127.0.0.1:__MOTORE__
+
+upstreams:
+  init:
+    strategy: fast
+  groups:
+    default:
+      - https://1.1.1.1/dns-query
+      - https://9.9.9.9/dns-query
+  strategy: parallel_best
+  timeout: 2s
+
+bootstrapDns:
+  - upstream: 1.1.1.1
+  - upstream: 9.9.9.9
+
+customDNS:
+  filterUnmappedTypes: true
+  zone: |
+    $ORIGIN .
+    $TTL 300
+    use-application-dns.net. 300 IN TXT "filtreo"
+    mask.icloud.com. 300 IN TXT "filtreo"
+    mask-h2.icloud.com. 300 IN TXT "filtreo"
+    controllo-filtreo.fullhd-david.workers.dev. 30 IN A 192.0.2.77
+
+blocking:
+  denylists:
+__GRUPPI_BLOCCO__
+    manuale:
+      - /data/liste/blocca.txt
+  allowlists:
+__GRUPPI_PERMESSI__
+    manuale:
+      - /data/liste/manuale-ok.txt
+  clientGroupsBlock:
+    default:
+      - casa
+      - manuale
+__DISPOSITIVI__
+  blockType: zeroIp
+  blockTTL: 1m
+  loading:
+    # 0 = Blocky non rilegge le liste da solo ogni 12 ore: sono file locali e li ricarica Filtreo SOLO quando cambiano
+    # (una rilettura di tutti i gruppi insieme alle 01:00 raddoppia la memoria e può fermare il motore).
+    refreshPeriod: 0m
+    downloads:
+      timeout: 60s
+      attempts: 3
+      cooldown: 5s
+    concurrency: 4
+    # «blocking»: Blocky risponde solo DOPO aver caricato le liste (sono file locali, pochi secondi).
+    # Con «fast» nei primi secondi dopo ogni riavvio la pubblicità passava.
+    strategy: blocking
+
+caching:
+  minTime: 5m
+  maxTime: 30m
+  prefetching: true
+
+queryLog:
+  type: csv
+  target: /data/log
+  logRetentionDays: 7
+  flushInterval: 5s
+
+log:
+  level: info
+  format: text

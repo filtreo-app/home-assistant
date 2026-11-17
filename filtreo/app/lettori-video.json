@@ -1,0 +1,435 @@
+{
+ "versione": 1,
+ "nota": "Lista curata di Filtreo: SOLO lettori video e CDN di lettori, mai pubblicità. 'domini' = come si riconosce un pezzo del lettore; 'serie' = indirizzi esatti lasciati passare di serie nella rete di Casa (DNS: non vede i percorsi, ma mai i sottodomini di misura); 'serie_browser' = solo gli host che servono file statici del lettore, lasciati passare di serie nel browser (lì un permesso vale per tutto l'indirizzo, percorsi pubblicitari compresi: per questo sono meno); 'misure' = misure/telemetria del lettore, restano bloccate. Fonti: documentazione dei lettori, eccezioni per sito di uBlock Origin (filters/unbreak.txt) e AdGuard, liste DNS (Hagezi Pro) controllate il 13/11/2026. Questo file e addon-ha/filtreo/app/lettori-video.json devono avere gli stessi lettori (lo controlla npm test).",
+ "lettori": [
+  {
+   "nome": "JW Player",
+   "domini": [
+    "jwplayer.com",
+    "jwpcdn.com",
+    "jwplatform.com"
+   ],
+   "serie": [
+    "cdn.jwplayer.com",
+    "content.jwplatform.com",
+    "ssl.p.jwpcdn.com"
+   ],
+   "misure": [
+    "jwpsrv.com",
+    "jwpltx.com"
+   ],
+   "serie_browser": [
+    "cdn.jwplayer.com",
+    "content.jwplatform.com"
+   ]
+  },
+  {
+   "nome": "Video.js",
+   "domini": [
+    "zencdn.net",
+    "videojs.com"
+   ],
+   "serie": [
+    "vjs.zencdn.net"
+   ],
+   "misure": [],
+   "serie_browser": [
+    "vjs.zencdn.net"
+   ]
+  },
+  {
+   "nome": "Brightcove",
+   "domini": [
+    "brightcove.net",
+    "brightcove.com",
+    "boltdns.net"
+   ],
+   "serie": [
+    "players.brightcove.net",
+    "edge.api.brightcove.com",
+    "manifest.prod.boltdns.net"
+   ],
+   "misure": [
+    "metrics.brightcove.com",
+    "beacon.playback.api.brightcove.com"
+   ],
+   "serie_browser": [
+    "players.brightcove.net"
+   ]
+  },
+  {
+   "nome": "Vimeo",
+   "domini": [
+    "vimeo.com",
+    "vimeocdn.com"
+   ],
+   "serie": [
+    "player.vimeo.com",
+    "i.vimeocdn.com",
+    "f.vimeocdn.com"
+   ],
+   "misure": [
+    "arclight.vimeo.com",
+    "player-telemetry.vimeo.com",
+    "fresnel-events.vimeocdn.com"
+   ],
+   "serie_browser": [
+    "i.vimeocdn.com",
+    "f.vimeocdn.com"
+   ]
+  },
+  {
+   "nome": "Wistia",
+   "domini": [
+    "wistia.com",
+    "wistia.net"
+   ],
+   "serie": [
+    "fast.wistia.com",
+    "fast.wistia.net",
+    "embed-ssl.wistia.com"
+   ],
+   "misure": [
+    "distillery.wistia.com",
+    "pipedream.wistia.com"
+   ],
+   "serie_browser": [
+    "fast.wistia.com",
+    "fast.wistia.net",
+    "embed-ssl.wistia.com"
+   ]
+  },
+  {
+   "nome": "Dailymotion",
+   "domini": [
+    "dailymotion.com",
+    "dmcdn.net"
+   ],
+   "serie": [
+    "geo.dailymotion.com",
+    "www.dailymotion.com",
+    "static1.dmcdn.net",
+    "s1.dmcdn.net"
+   ],
+   "misure": [
+    "dmxleo.dailymotion.com"
+   ],
+   "serie_browser": [
+    "static1.dmcdn.net",
+    "s1.dmcdn.net"
+   ]
+  },
+  {
+   "nome": "YouTube incorporato",
+   "domini": [
+    "youtube-nocookie.com",
+    "ytimg.com",
+    "img.youtube.com"
+   ],
+   "serie": [
+    "www.youtube-nocookie.com",
+    "i.ytimg.com",
+    "s.ytimg.com",
+    "img.youtube.com"
+   ],
+   "misure": [],
+   "serie_browser": []
+  },
+  {
+   "nome": "Twitch",
+   "domini": [
+    "player.twitch.tv",
+    "jtvnw.net",
+    "ttvnw.net"
+   ],
+   "serie": [
+    "player.twitch.tv",
+    "static-cdn.jtvnw.net"
+   ],
+   "misure": [],
+   "serie_browser": []
+  },
+  {
+   "nome": "Plyr",
+   "domini": [
+    "plyr.io"
+   ],
+   "serie": [
+    "cdn.plyr.io"
+   ],
+   "misure": [],
+   "serie_browser": [
+    "cdn.plyr.io"
+   ]
+  },
+  {
+   "nome": "Flowplayer",
+   "domini": [
+    "flowplayer.com"
+   ],
+   "serie": [
+    "cdn.flowplayer.com",
+    "releases.flowplayer.com"
+   ],
+   "misure": [
+    "ihi.flowplayer.com",
+    "pmi.flowplayer.com",
+    "health.flowplayer.com"
+   ],
+   "serie_browser": [
+    "cdn.flowplayer.com",
+    "releases.flowplayer.com"
+   ]
+  },
+  {
+   "nome": "THEOplayer",
+   "domini": [
+    "theoplayer.com"
+   ],
+   "serie": [
+    "cdn.theoplayer.com"
+   ],
+   "misure": [],
+   "serie_browser": [
+    "cdn.theoplayer.com"
+   ]
+  },
+  {
+   "nome": "Bitmovin",
+   "domini": [
+    "bitmovin.com"
+   ],
+   "serie": [
+    "cdn.bitmovin.com"
+   ],
+   "misure": [
+    "bitmovin-bitanalytics.appspot.com"
+   ],
+   "serie_browser": [
+    "cdn.bitmovin.com"
+   ]
+  },
+  {
+   "nome": "Mux",
+   "domini": [
+    "mux.com"
+   ],
+   "serie": [
+    "stream.mux.com",
+    "image.mux.com"
+   ],
+   "misure": [
+    "litix.io"
+   ],
+   "serie_browser": [
+    "stream.mux.com",
+    "image.mux.com"
+   ]
+  },
+  {
+   "nome": "Cloudflare Stream",
+   "domini": [
+    "cloudflarestream.com",
+    "videodelivery.net"
+   ],
+   "serie": [
+    "embed.cloudflarestream.com",
+    "iframe.videodelivery.net"
+   ],
+   "misure": [
+    "stats.videodelivery.net"
+   ],
+   "serie_browser": []
+  },
+  {
+   "nome": "Vidyard",
+   "domini": [
+    "vidyard.com"
+   ],
+   "serie": [
+    "play.vidyard.com",
+    "cdn.vidyard.com",
+    "embed.vidyard.com"
+   ],
+   "misure": [
+    "raw.vidyard.com"
+   ],
+   "serie_browser": [
+    "play.vidyard.com",
+    "cdn.vidyard.com"
+   ]
+  },
+  {
+   "nome": "Kaltura",
+   "domini": [
+    "kaltura.com"
+   ],
+   "serie": [
+    "cdnapisec.kaltura.com",
+    "cfvod.kaltura.com",
+    "cdnsecakmi.kaltura.com"
+   ],
+   "misure": [
+    "kalstats.kaltura.com"
+   ],
+   "serie_browser": [
+    "cdnapisec.kaltura.com",
+    "cfvod.kaltura.com"
+   ]
+  },
+  {
+   "nome": "Streamable",
+   "domini": [
+    "streamable.com"
+   ],
+   "serie": [
+    "cdn-cf-east.streamable.com"
+   ],
+   "misure": [
+    "socket.streamable.com"
+   ],
+   "serie_browser": []
+  },
+  {
+   "nome": "Ooyala",
+   "domini": [
+    "ooyala.com"
+   ],
+   "serie": [
+    "player.ooyala.com"
+   ],
+   "misure": [],
+   "serie_browser": []
+  },
+  {
+   "nome": "Rumble",
+   "domini": [
+    "rumble.com",
+    "1a-1791.com"
+   ],
+   "serie": [
+    "1a-1791.com"
+   ],
+   "misure": [
+    "sentry.rumble.work"
+   ],
+   "serie_browser": [
+    "1a-1791.com"
+   ]
+  },
+  {
+   "nome": "Odysee",
+   "domini": [
+    "odycdn.com"
+   ],
+   "serie": [],
+   "misure": [],
+   "serie_browser": []
+  },
+  {
+   "nome": "Akamai Media Player",
+   "domini": [
+    "players.akamai.com"
+   ],
+   "serie": [
+    "players.akamai.com"
+   ],
+   "misure": [],
+   "serie_browser": []
+  }
+ ],
+ "cdn_generici": [
+  "cloudfront.net",
+  "akamaihd.net",
+  "akamaized.net",
+  "fastly.net",
+  "b-cdn.net",
+  "azureedge.net",
+  "edgesuite.net",
+  "edgekey.net",
+  "llnwd.net",
+  "stackpathcdn.com",
+  "cdn77.org",
+  "vo.msecnd.net",
+  "bunnycdn.com"
+ ],
+ "prove_video": "\\.(m3u8|mpd|mp4|webm|m4s|m4v|ts|mp3|aac)$|/(hls|dash|manifest|playlist|video|videos|vod|stream|streams|chunklist|media)(/|$)|(playlist|manifest|chunklist)",
+ "percorsi_libreria": "(^|/)(hls(\\.min)?\\.js|hls\\.light(\\.min)?\\.js|dash\\.(all|mediaplayer)(\\.min)?\\.js|video(\\.min)?\\.js|videojs[^/]*\\.js|video-js[^/]*\\.(js|css)|plyr[^/]*\\.(js|css)|jwplayer[^/]*\\.js|shaka-player[^/]*\\.js|clappr[^/]*\\.js|flowplayer[^/]*\\.js|mediaelement[^/]*\\.js|vjs-[^/]*\\.js|contrib-ads[^/]*\\.(js|css)|videojs\\.ads[^/]*\\.(js|css))$",
+ "sempre_ok": {
+  "nota": "Lettori video: indirizzi che il Filtro di rete (Casa e Cloudflare) NON blocca mai. Regola: solo ciò che serve al LETTORE, mai ciò che serve SPOT o misure. Senza spot il programma pubblicitario (IMA) dice «nessuna pubblicità» e il lettore fa partire il video; se invece si blocca il programma stesso il video resta fermo. Restano bloccati: doubleclick.net (pubads, securepubads, googleads), googlesyndication.com, 2mdn.net (server dei contenuti degli spot: NON permesso), adnxs, spotx, springserve, fwmrm, teads, ecc. Oltre a queste voci passano anche gli indirizzi esatti di 'serie' di ogni lettore (file statici del lettore). Un blocco a mano (blocca.txt) vince sempre.",
+  "voci": [
+   {
+    "dominio": "imasdk.googleapis.com",
+    "perche": "solo il programma (SDK) IMA di Google che i lettori caricano: non serve spot; senza spot IMA dà errore «nessuna pubblicità» e il video parte"
+   },
+   {
+    "dominio": "googleads.github.io",
+    "perche": "pagine di esempio ufficiali di Google IMA su GitHub Pages: non sono pubblicità, solo il nome contiene «googleads» (nome esatto, nessun sottodominio di doubleclick)"
+   }
+  ]
+ },
+ "mai": {
+  "domini": [
+   "doubleclick.net",
+   "googlesyndication.com",
+   "googleadservices.com",
+   "googletagservices.com",
+   "imasdk.googleapis.com",
+   "adnxs.com",
+   "aniview.com",
+   "ex.co",
+   "vidazoo.com",
+   "primis.tech",
+   "primis.tv",
+   "connatix.com",
+   "anyclip.com",
+   "vidoomy.com",
+   "teads.tv",
+   "spotx.tv",
+   "spotxchange.com",
+   "springserve.com",
+   "freewheel.tv",
+   "fwmrm.net",
+   "innovid.com",
+   "tremorhub.com",
+   "taboola.com",
+   "outbrain.com",
+   "criteo.com",
+   "criteo.net",
+   "amazon-adsystem.com",
+   "pubmatic.com",
+   "rubiconproject.com",
+   "openx.net",
+   "smartadserver.com",
+   "adform.net",
+   "moatads.com",
+   "scorecardresearch.com",
+   "adsrvr.org",
+   "33across.com",
+   "yieldmo.com",
+   "media.net",
+   "seedtag.com",
+   "sharethrough.com",
+   "adskeeper.com",
+   "mgid.com",
+   "exoclick.com",
+   "popads.net",
+   "propellerads.com",
+   "juicyads.com",
+   "trafficjunky.net",
+   "clickadu.com",
+   "hilltopads.net",
+   "adcash.com",
+   "onclickads.net",
+   "popcash.net",
+   "adsafeprotected.com",
+   "quantserve.com",
+   "casalemedia.com",
+   "videoplayerhub.com",
+   "dmads.dailymotion.com",
+   "ads.youtube.com"
+  ],
+  "parole": "(^|[.-])(ads?|adserver|adservice|adtech|advert\\w*|banner|popunder|popads?|vast|vpaid|prebid|rtb|ssp|dsp|sponsor\\w*|syndication|promo|affiliate|pagead)([.-]|$)"
+ },
+ "misura_parole": "(^|[.-])(track\\w*|pixel|beacon|telemetry|analytics|metrics?|stats?|events?|logs?|logging|collect\\w*|ping|sentry|rum|bitanalytics)([.-]|$)"
+}

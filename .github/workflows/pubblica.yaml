@@ -1,0 +1,56 @@
+# Prepara FiltreoCasa già pronto per ogni processore (Raspberry/ARM e PC/Intel) a ogni nuova versione.
+# Home Assistant scarica l'immagine pronta: installazione in meno di un minuto, niente costruzione sul posto.
+name: Pubblica FiltreoCasa
+on:
+  push:
+    branches: [main]
+    paths: ["filtreo/**", ".github/workflows/pubblica.yaml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+jobs:
+  immagine:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - arch: aarch64
+            piattaforma: linux/arm64
+          - arch: amd64
+            piattaforma: linux/amd64
+    steps:
+      - uses: actions/checkout@v4
+      - name: Versione
+        id: v
+        run: |
+          echo "versione=$(grep -m1 '^version:' filtreo/config.yaml | tr -d '" ' | cut -d: -f2)" >> "$GITHUB_OUTPUT"
+      - name: Base
+        id: b
+        run: |
+          echo "base=$(grep -m1 '^ *${{ matrix.arch }}:' filtreo/build.yaml | sed 's/^[^:]*: *//')" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: filtreo
+          platforms: ${{ matrix.piattaforma }}
+          push: true
+          provenance: false
+          build-args: BUILD_FROM=${{ steps.b.outputs.base }}
+          labels: |
+            io.hass.type=addon
+            io.hass.arch=${{ matrix.arch }}
+            io.hass.version=${{ steps.v.outputs.versione }}
+            io.hass.name=Filtreo
+            org.opencontainers.image.source=https://github.com/filtreo-app/home-assistant
+          tags: |
+            ghcr.io/filtreo-app/${{ matrix.arch }}-filtreo:${{ steps.v.outputs.versione }}
+            ghcr.io/filtreo-app/${{ matrix.arch }}-filtreo:latest
+          cache-from: type=gha,scope=${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.arch }}

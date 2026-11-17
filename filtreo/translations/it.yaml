@@ -1,0 +1,7 @@
+configuration:
+  integrazione_ha:
+    name: Integrazione con Home Assistant
+    description: Sensori e interruttori di Filtreo (protezione, pausa, bloccate oggi) direttamente in Home Assistant.
+  chiave_barra:
+    name: Chiave per le app di prima
+    description: Serve solo agli impianti installati prima della versione 0.10. Lascia vuoto.

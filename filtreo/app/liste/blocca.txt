@@ -1,0 +1,1 @@
+# Siti bloccati a mano da Gio (uno per riga, es: *.esempio.com)
